@@ -1,0 +1,8 @@
+*
+!*/
+!.gitignore
+
+!demo_1/sim/Makefile
+!demo_1/sim/flist.f
+!demo_1/src/*.sv
+!demo_1/src/*.v
