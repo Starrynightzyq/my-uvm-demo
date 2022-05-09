@@ -66,29 +66,17 @@ task my_driver::main_phase(uvm_phase phase);
 endtask
 
 task my_driver::drive_one_pkt(my_transcation tr);
-    bit [47:0] tmp_data;
-    bit [ 7:0] data_q[$];
+    byte unsigned data_q[];
+    int data_size;
 
-    // push dmac to data_q
-    tmp_data = tr.dmac;
-    for(int i = 0; i < 6; i++)begin
-        data_q.push_back(tmp_data[7:0]);
-        tmp_data = (tmp_data >> 8);
-    end
-
-    // push crc to data_q
-    for(int i = 0; i < 4; i++)begin
-        data_q.push_back(tmp_data[7:0]);
-        tmp_data = (tmp_data >> 8);
-    end
-
+    data_size = tr.pack_bytes(data_q) / 8;
     `uvm_info("my_driver", "begin to drive_one_pkt", UVM_LOW);
     repeat(3) @(posedge vif.clk);
 
-    while(data_q.size() > 0) begin
+    for(int i = 0; i < data_size; i++) begin
         @(posedge vif.clk);
         vif.valid <= 1'b1;
-        vif.data <= data_q.pop_front();
+        vif.data <= data_q[i];
     end
 
     @(posedge vif.clk);
