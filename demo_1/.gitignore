@@ -1,0 +1,9 @@
+*
+!*/
+!.gitignore
+!README.md
+
+!sim/Makefile
+!sim/flist.f
+!src/*.sv
+!src/*.v
