@@ -24,7 +24,8 @@
 `include "uvm_macros.svh"
 
 import uvm_pkg::*;
-`include "base_test.sv"
+`include "my_case0.sv"
+`include "my_case1.sv"
 
 module top_tb;
 
@@ -46,7 +47,7 @@ module top_tb;
     );
 
     initial begin
-        run_test("base_test");
+        run_test();
     end
 
     initial begin

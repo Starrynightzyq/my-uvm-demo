@@ -20,6 +20,7 @@
 ## 
 
 TOP ?= top_tb
+TEST_CASE ?= my_case0
 
 export LD_LIBRARY_PATH=${VERDI_HOME}/share/PLI/VCS/LINUX64
 
@@ -42,6 +43,7 @@ comp:
 
 run:
 	$(SIMV) \
+		+UVM_TESTNAME=$(TEST_CASE) \
 		+DUMP_FSDB
 	make check
 
