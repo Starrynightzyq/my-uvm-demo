@@ -7,3 +7,4 @@
 !sim/flist.f
 !src/*.sv
 !src/*.v
+!pic/*
