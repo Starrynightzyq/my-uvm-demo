@@ -24,7 +24,7 @@
 `include "uvm_macros.svh"
 
 import uvm_pkg::*;
-`include "my_env.sv"
+`include "base_test.sv"
 
 module top_tb;
 
@@ -46,13 +46,13 @@ module top_tb;
     );
 
     initial begin
-        run_test("my_env");
+        run_test("base_test");
     end
 
     initial begin
-        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.i_agt.drv", "vif", input_if);
-        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.i_agt.mon", "vif", input_if);
-        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.o_agt.mon", "vif", output_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.env.i_agt.drv", "vif", input_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.env.i_agt.mon", "vif", input_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.env.o_agt.mon", "vif", output_if);
     end
 
     initial begin

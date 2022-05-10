@@ -21,6 +21,9 @@
 // 
 // -FHDR----------------------------------------------------------------------------
 
+`ifndef MY_SEQUENCE__SV
+`define MY_SEQUENCE__SV
+
 class my_sequence extends uvm_sequence#(my_transcation);
     my_transcation m_trans;
 
@@ -42,3 +45,5 @@ class my_sequence extends uvm_sequence#(my_transcation);
 
     `uvm_object_utils(my_sequence);
 endclass
+
+`endif

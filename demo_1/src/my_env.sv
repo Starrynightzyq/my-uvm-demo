@@ -54,11 +54,6 @@ class my_env extends uvm_env;
         mdl_msd_fifo = new("mdl_msd_fifo", this);
         oagt_msd_fifo = new("oagt_msd_fifo", this);
         msd = my_scoreboard::type_id::create("msd", this);
-
-        uvm_config_db#(uvm_object_wrapper)::set(this,
-                                                "i_agt.sqr.main_phase",
-                                                "default_sequence",
-                                                my_sequence::type_id::get());
     endfunction
 
     function void connect_phase(uvm_phase phase);
