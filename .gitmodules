@@ -1,0 +1,3 @@
+[submodule "axi-uvm"]
+	path = axi-uvm
+	url = git@github.com:Starrynightzyq/axi-uvm.git
