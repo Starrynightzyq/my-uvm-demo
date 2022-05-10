@@ -27,6 +27,7 @@
 `include "my_agent.sv"
 `include "my_model.sv"
 `include "my_scoreboard.sv"
+`include "my_sequence.sv"
 
 class my_env extends uvm_env;
 
@@ -53,6 +54,11 @@ class my_env extends uvm_env;
         mdl_msd_fifo = new("mdl_msd_fifo", this);
         oagt_msd_fifo = new("oagt_msd_fifo", this);
         msd = my_scoreboard::type_id::create("msd", this);
+
+        uvm_config_db#(uvm_object_wrapper)::set(this,
+                                                "i_agt.sqr.main_phase",
+                                                "default_sequence",
+                                                my_sequence::type_id::get());
     endfunction
 
     function void connect_phase(uvm_phase phase);
@@ -69,6 +75,16 @@ class my_env extends uvm_env;
 
     `uvm_component_utils(my_env);
 
+    // extern task main_phase(uvm_phase phase);
+
 endclass
+
+// task my_env::main_phase(uvm_phase phase);
+    // my_sequence seq;
+    // phase.raise_objection(this);
+    // seq = my_sequence::type_id::create("seq");
+    // seq.start(i_agt.sqr);
+    // phase.drop_objection(this);
+// endtask
 
 `endif

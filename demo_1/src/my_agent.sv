@@ -26,9 +26,11 @@
 
 `include "my_driver.sv"
 `include "my_monitor.sv"
+`include "my_sequencer.sv"
 
 class my_agent extends uvm_agent;
     my_driver drv;
+    my_sequencer sqr;
     my_monitor mon;
     uvm_analysis_port#(my_transcation) ap;
 
@@ -45,6 +47,7 @@ endclass
 function void my_agent::build_phase(uvm_phase phase);
     super.build_phase(phase);
     if(is_active == UVM_ACTIVE) begin
+        sqr = my_sequencer::type_id::create("sqr", this);
         drv = my_driver::type_id::create("drv", this);
     end
     mon = my_monitor::type_id::create("mon", this);
@@ -53,6 +56,9 @@ endfunction
 function void my_agent::connect_phase(uvm_phase phase);
     super.connect_phase(phase);
     ap = mon.ap;
+    if(is_active == UVM_ACTIVE) begin
+        drv.seq_item_port.connect(sqr.seq_item_export);
+    end
 endfunction
 
 `endif

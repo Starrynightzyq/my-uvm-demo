@@ -26,7 +26,7 @@
 
 `include "my_transcation.sv"
 
-class my_driver extends uvm_driver;
+class my_driver extends uvm_driver#(my_transcation);
     `uvm_component_utils(my_driver);
     virtual my_if vif;
 
@@ -49,20 +49,18 @@ endclass
 task my_driver::main_phase(uvm_phase phase);
     my_transcation tr;
 
-    phase.raise_objection(this);
     `uvm_info("my_driver", "main_phase is called", UVM_LOW);
 
     vif.data        <=8'h0;
     vif.valid       <= 1'h0;
     while(!vif.rst_n)
         @(posedge vif.clk);
-    for(int i = 0; i < 2; i++) begin
-        tr = new("tr");
-        assert(tr.randomize() with {pload.size == 200;});
-        drive_one_pkt(tr);
+    while(1) begin
+        // req = new("req");
+        seq_item_port.get_next_item(req);
+        drive_one_pkt(req);
+        seq_item_port.item_done();
     end
-    repeat(8) @(posedge vif.clk);
-    phase.drop_objection(this);
 endtask
 
 task my_driver::drive_one_pkt(my_transcation tr);
